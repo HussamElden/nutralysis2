@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFrag">
+    <fragment
+        android:id="@+id/mainFrag"
+        android:name="com.example.nutralysis2.View.MainFrag"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFrag_to_incredientListFragment"
+            app:destination="@id/incredientListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/incredientListFragment"
+        android:name="com.example.nutralysis2.View.IncredientListFragment"
+        android:label="fragment_incredient_list"
+        tools:layout="@layout/fragment_incredient_list" >
+        <argument android:name="ingredients"
+            android:defaultValue="None"/>
+        <action
+            android:id="@+id/action_incredientListFragment_to_totalNutrients"
+            app:destination="@id/totalNutrients" />
+    </fragment>
+    <fragment
+        android:id="@+id/totalNutrients"
+        android:name="com.example.nutralysis2.View.TotalNutrients"
+        android:label="TotalNutrients" >
+
+        <argument android:name="analysisData"
+            android:defaultValue="None"/>
+
+    </fragment>
+</navigation>
