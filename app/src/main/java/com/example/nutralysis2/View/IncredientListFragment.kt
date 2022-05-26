@@ -22,6 +22,8 @@ import com.example.nutralysis2.entities.nutrentanalysis
 import com.example.nutralysis2.model.analyisiViewModel
 import com.example.nutralysis2.model.analysisViewModelFactory
 import com.example.nutralysis2.model.nutrationRepo
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.fragment_incredient_list.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -63,12 +65,16 @@ class IncredientListFragment : Fragment() {
                 analysisData = it
             }
             progressBar.isVisible = false
+            BTTotal.isVisible = true
         })
         viewModel.getNutrents(ingredients)
         BTTotal.setOnClickListener {
             if(analysisData != null){
+                val gson = Gson()
 
-                val bundle = bundleOf("analysisData" to analysisData.toString() )
+
+                val jsonTut: String = gson.toJson(analysisData)
+                val bundle = bundleOf("analysisData" to jsonTut )
                 navController!!.navigate(R.id.action_incredientListFragment_to_totalNutrients,bundle)
             }
         }
