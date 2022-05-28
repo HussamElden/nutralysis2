@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
-object nutrationRepo {
+class nutrationRepo  {
     val api:nutrientsApi by lazy {
         Retrofit.Builder()
             .baseUrl("https://api.edamam.com/api/")

@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutralysis2.R
+import com.example.nutralysis2.databinding.FragmentTotalNutrientsBinding
 import com.example.nutralysis2.entities.nutrentanalysis
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.fragment_incredient_list.*
-import kotlinx.android.synthetic.main.fragment_total_nutrients.*
+
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
@@ -20,10 +20,14 @@ import kotlin.math.roundToInt
 
 @SuppressLint("UseRequireInsteadOfGet")
 class TotalNutrients : Fragment() {
+    private lateinit var binding: FragmentTotalNutrientsBinding
+
     lateinit var analysisData: nutrentanalysis
     lateinit var listOfVitamins: List<List<String>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentTotalNutrientsBinding.inflate(layoutInflater)
+
         val gson = Gson()
         val json = arguments!!.get("analysisData") as String
 
@@ -68,39 +72,41 @@ class TotalNutrients : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_total_nutrients, container, false)
+        FragmentTotalNutrientsBinding.inflate(inflater,container,false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = VitaminAdapter(listOfVitamins)
-        rvVitamns
-        rvVitamns.layoutManager = LinearLayoutManager(this.context)
-        rvVitamns.adapter = adapter
+
+        binding.rvVitamns.layoutManager = LinearLayoutManager(this.context)
+        binding.rvVitamns.adapter = adapter
 
 
-        tvCalories.text = ((analysisData.calories * 100.0).roundToInt() / 100.0).toString()
-        tvCholesterol.text =
-            ((analysisData.totalNutrients.CHOLE.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvCalories.text = ((analysisData?.calories * 100.0).roundToInt() / 100.0).toString()
+        binding.tvCholesterol.text =
+            ((analysisData?.totalNutrients?.CHOLE.quantity * 100.0).roundToInt() / 100.0).toString()
 
-        tvFat.text =
-            ((analysisData.totalNutrients.FAT.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvFat.text =
+            ((analysisData?.totalNutrients?.FAT.quantity * 100.0).roundToInt() / 100.0).toString()
 
-        tvCarbohydrate.text =
-            ((analysisData.totalNutrients.CHOCDF.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvCarbohydrate.text =
+            ((analysisData?.totalNutrients?.CHOCDF.quantity * 100.0).roundToInt() / 100.0).toString()
 
-        tvSodium.text =
-            ((analysisData.totalNutrients.NA.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvSodium.text =
+            ((analysisData.totalNutrients?.NA.quantity * 100.0).roundToInt() / 100.0).toString()
 
-        tvProtein.text =
-            ((analysisData.totalNutrients.PROCNT.quantity * 100.0).roundToInt() / 100.0).toString()
-        tvIron.text =
-            ((analysisData.totalNutrients.FE.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvProtein.text =
+            ((analysisData.totalNutrients?.PROCNT.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvIron.text =
+            ((analysisData.totalNutrients?.FE.quantity * 100.0).roundToInt() / 100.0).toString()
 
-        tvPotassium.text =
-            ((analysisData.totalNutrients.K.quantity * 100.0).roundToInt() / 100.0).toString()
-        tvCalcium.text =
-            ((analysisData.totalNutrients.CA.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvPotassium.text =
+            ((analysisData.totalNutrients?.K.quantity * 100.0).roundToInt() / 100.0).toString()
+        binding.tvCalcium.text =
+            ((analysisData.totalNutrients?.CA.quantity * 100.0).roundToInt() / 100.0).toString()
 
 
     }

@@ -16,34 +16,37 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.nutralysis2.R
+import com.example.nutralysis2.databinding.FragmentMainBinding
+import com.example.nutralysis2.databinding.FragmentTotalNutrientsBinding
 import com.example.nutralysis2.model.analyisiViewModel
 import com.example.nutralysis2.model.analysisViewModelFactory
 import com.example.nutralysis2.model.nutrationRepo
-import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.fragment_main.view.*
+import dagger.hilt.android.HiltAndroidApp
 
 
 class MainFrag : Fragment() {
     var navController: NavController?=null
+    private lateinit var binding:FragmentMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        binding= FragmentMainBinding.inflate(layoutInflater)
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         navController= Navigation.findNavController(view)
-        view.tvIngredients.addTextChangedListener(object :TextWatcher{
+        binding.tvIngredients.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, after: Int) {
                 if (after== 0){
-                    view.button.setEnabled(false);
+                    binding.button.setEnabled(false);
                 }else{
-                    view.button.setEnabled(true);
+                    binding.button.setEnabled(true);
                 }
             }
 
@@ -51,10 +54,10 @@ class MainFrag : Fragment() {
 
             }
         })
-        view.button.setOnClickListener {
-            if(!TextUtils.isEmpty(tvIngredients.text.toString())){
-                Log.d("test", tvIngredients.text.toString())
-                val bundle = bundleOf("ingredients" to tvIngredients.text.toString() )
+        binding.button.setOnClickListener {
+            if(!TextUtils.isEmpty(binding.tvIngredients.text.toString())){
+                Log.d("test", binding.tvIngredients.text.toString())
+                val bundle = bundleOf("ingredients" to binding.tvIngredients.text.toString() )
                 navController!!.navigate(R.id.action_mainFrag_to_incredientListFragment,bundle)
             }
         }
@@ -64,8 +67,10 @@ class MainFrag : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        FragmentMainBinding.inflate(inflater,container,false)
+
+        return binding.root
+
     }
 
 

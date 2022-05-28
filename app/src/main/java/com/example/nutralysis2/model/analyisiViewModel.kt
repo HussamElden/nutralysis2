@@ -1,9 +1,11 @@
 package com.example.nutralysis2.model
 
 import android.util.Log
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.nutralysis2.entities.nutrentanalysis
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -11,11 +13,14 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import javax.inject.Inject
+import javax.inject.Named
 
-
-class analyisiViewModel( var nutrationrepo:nutrationRepo): ViewModel() {
+@HiltViewModel
+class analyisiViewModel @Inject constructor(private val nutrationrepo: nutrationRepo): ViewModel() {
 
     var allObjLiveData = MutableLiveData<nutrentanalysis>()
+
 
      fun getNutrents(ingrediant: List<String> =listOf()) =CoroutineScope(Dispatchers.Main).launch {
          val jsonObject = JSONObject()
