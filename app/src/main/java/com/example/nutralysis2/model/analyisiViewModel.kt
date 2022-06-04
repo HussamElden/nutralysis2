@@ -20,11 +20,12 @@ import javax.inject.Named
 class analyisiViewModel @Inject constructor(private val nutrationrepo: nutrationRepo): ViewModel() {
 
     var allObjLiveData = MutableLiveData<nutrentanalysis>()
+    var test=""
 
-
-     fun getNutrents(ingrediant: List<String> =listOf()) =CoroutineScope(Dispatchers.Main).launch {
+     suspend fun getNutrents(ingrediant: String=""):Boolean{
+         var arrayOfIngrediants = ingrediant.split("\n")
          val jsonObject = JSONObject()
-         jsonObject.put("ingr", JSONArray(ingrediant))
+         jsonObject.put("ingr", JSONArray(arrayOfIngrediants))
 
 
          // Convert JSONObject to String
@@ -33,8 +34,20 @@ class analyisiViewModel @Inject constructor(private val nutrationrepo: nutration
          // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
          val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
 //         Log.d("responsee", jsonObjectString)
-         allObjLiveData.value=   nutrationrepo.api.getNutrients(requestBody=requestBody).body()
+         var response =nutrationrepo.api.getNutrients(requestBody=requestBody)
+         allObjLiveData.value=   response.body()
+
+        return response.isSuccessful
 
      }
+    fun getanalisysdata(): nutrentanalysis? {
+        Log.d("getanalisysdata",  allObjLiveData.value.toString())
+        return allObjLiveData.value
+    }
+    fun isButtonDisplayed(textAfter:Int):Boolean{
+        return textAfter != 0
+
+    }
+
     }
 

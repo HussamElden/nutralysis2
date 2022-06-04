@@ -7,32 +7,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nutralysis2.R
 import com.example.nutralysis2.databinding.FragmentTotalNutrientsBinding
 import com.example.nutralysis2.entities.nutrentanalysis
+import com.example.nutralysis2.model.analyisiViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
 import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
+@AndroidEntryPoint
 @SuppressLint("UseRequireInsteadOfGet")
 class TotalNutrients : Fragment() {
     private lateinit var binding: FragmentTotalNutrientsBinding
 
     lateinit var analysisData: nutrentanalysis
     lateinit var listOfVitamins: List<List<String>>
+    val viewModel: analyisiViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentTotalNutrientsBinding.inflate(layoutInflater)
+        analysisData = viewModel.getanalisysdata()!!
 
-        val gson = Gson()
-        val json = arguments!!.get("analysisData") as String
-
-        analysisData = gson.fromJson(json, nutrentanalysis::class.java)
-        Log.d("data", analysisData.toString())
         listOfVitamins = listOf(
             listOf(
                 analysisData.totalNutrients.VITA_RAE.label,
@@ -72,7 +73,7 @@ class TotalNutrients : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        FragmentTotalNutrientsBinding.inflate(inflater,container,false)
+        FragmentTotalNutrientsBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -80,7 +81,7 @@ class TotalNutrients : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = VitaminAdapter(listOfVitamins)
-
+        Log.d("moved data 2", viewModel.test)
         binding.rvVitamns.layoutManager = LinearLayoutManager(this.context)
         binding.rvVitamns.adapter = adapter
 

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -44,12 +45,12 @@ class IncredientListFragment : Fragment() {
     private lateinit var binding: FragmentIncredientListBinding
 
 
-    val viewModel : analyisiViewModel by viewModels()
+    val viewModel: analyisiViewModel by activityViewModels()
+
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= FragmentIncredientListBinding.inflate(layoutInflater)
-        ingredients = arguments!!.getString("ingredients").toString().split("\n")
+        binding = FragmentIncredientListBinding.inflate(layoutInflater)
 
 
     }
@@ -57,39 +58,21 @@ class IncredientListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val repository = nutrationRepo
-//        val factory = analysisViewModelFactory(repository)
-//        val viewModel = ViewModelProviders.of(this, factory).get(analyisiViewModel::class.java)
-
         val adapter = IngredientsAdapter(listOf())
         navController = Navigation.findNavController(view)
-
+        analysisData = viewModel.getanalisysdata()!!
         binding.rvIngredients.layoutManager = LinearLayoutManager(this.context)
         binding.rvIngredients.adapter = adapter
+        adapter.items = analysisData.ingredients
+        adapter.notifyDataSetChanged()
 
-        viewModel.allObjLiveData.observe(viewLifecycleOwner, Observer {
-
-
-            if (it.ingredients != null) {
-                adapter.items = it.ingredients
-                adapter.notifyDataSetChanged()
-                analysisData = it
-            }
-            binding.progressBar.isVisible = false
-            binding.BTTotal.isVisible = true
-        })
-        viewModel.getNutrents(ingredients)
         binding.BTTotal.setOnClickListener {
             if (analysisData != null) {
-                val gson = Gson()
 
-
-                val jsonTut: String = gson.toJson(analysisData)
-                val bundle = bundleOf("analysisData" to jsonTut)
                 navController!!.navigate(
                     R.id.action_incredientListFragment_to_totalNutrients,
-                    bundle
-                )
+
+                    )
             }
         }
     }
@@ -98,7 +81,7 @@ class IncredientListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        FragmentIncredientListBinding.inflate(inflater,container,false)
+        FragmentIncredientListBinding.inflate(inflater, container, false)
 
         return binding.root
 
