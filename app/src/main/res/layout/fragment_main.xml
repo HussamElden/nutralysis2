@@ -42,7 +42,7 @@
         android:layout_marginBottom="68dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Recipe ingredients"
+        android:hint="@string/recipe_ingredients"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
         android:enabled="false"
-        android:text="Analyse"
+        android:text="@string/analyse"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

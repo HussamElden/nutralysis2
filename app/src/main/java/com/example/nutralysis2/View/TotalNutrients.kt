@@ -2,22 +2,16 @@ package com.example.nutralysis2.View
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nutralysis2.R
 import com.example.nutralysis2.databinding.FragmentTotalNutrientsBinding
 import com.example.nutralysis2.entities.nutrentanalysis
 import com.example.nutralysis2.model.analyisiViewModel
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-
-import kotlin.math.roundToInt
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,14 +19,14 @@ import kotlin.math.roundToInt
 @SuppressLint("UseRequireInsteadOfGet")
 class TotalNutrients : Fragment() {
     private lateinit var binding: FragmentTotalNutrientsBinding
-
     lateinit var analysisData: nutrentanalysis
     lateinit var listOfVitamins: List<List<String>>
-    val viewModel: analyisiViewModel by activityViewModels()
+    private val viewModel: analyisiViewModel by activityViewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = FragmentTotalNutrientsBinding.inflate(layoutInflater)
-        analysisData = viewModel.getanalisysdata()!!
+        analysisData = viewModel.getAnalyisisData()!!
 
         listOfVitamins = listOf(
             listOf(
@@ -81,33 +75,32 @@ class TotalNutrients : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = VitaminAdapter(listOfVitamins)
-        Log.d("moved data 2", viewModel.test)
+
         binding.rvVitamns.layoutManager = LinearLayoutManager(this.context)
         binding.rvVitamns.adapter = adapter
 
 
-        binding.tvCalories.text = ((analysisData?.calories * 100.0).roundToInt() / 100.0).toString()
+        binding.tvCalories.text = analysisData.calories.toString()
         binding.tvCholesterol.text =
-            ((analysisData?.totalNutrients?.CHOLE.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.CHOLE.quantity.toString()
 
         binding.tvFat.text =
-            ((analysisData?.totalNutrients?.FAT.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.FAT.quantity.toString()
 
         binding.tvCarbohydrate.text =
-            ((analysisData?.totalNutrients?.CHOCDF.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.CHOCDF.quantity.toString()
 
         binding.tvSodium.text =
-            ((analysisData.totalNutrients?.NA.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.NA.quantity.toString()
 
         binding.tvProtein.text =
-            ((analysisData.totalNutrients?.PROCNT.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.PROCNT.quantity.toString()
         binding.tvIron.text =
-            ((analysisData.totalNutrients?.FE.quantity * 100.0).roundToInt() / 100.0).toString()
-
+            analysisData.totalNutrients.FE.quantity.toString()
         binding.tvPotassium.text =
-            ((analysisData.totalNutrients?.K.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.K.quantity.toString()
         binding.tvCalcium.text =
-            ((analysisData.totalNutrients?.CA.quantity * 100.0).roundToInt() / 100.0).toString()
+            analysisData.totalNutrients.CA.quantity.toString()
 
 
     }

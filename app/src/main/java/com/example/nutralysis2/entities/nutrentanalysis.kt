@@ -1,7 +1,7 @@
 package com.example.nutralysis2.entities
 
 data class nutrentanalysis(
-    val calories: Int,
+    var calories: Int,
     val cautions: List<Any>,
     val dietLabels: List<String>,
     val healthLabels: List<String>,

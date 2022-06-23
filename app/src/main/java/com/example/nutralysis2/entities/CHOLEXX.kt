@@ -2,6 +2,6 @@ package com.example.nutralysis2.entities
 
 data class CHOLEXX(
     val label: String,
-    val quantity: Double,
+    var quantity: Double,
     val unit: String
 )

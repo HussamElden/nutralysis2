@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_incredientListFragment_to_totalNutrients"
             app:destination="@id/totalNutrients" />
+        <action
+            android:id="@+id/action_incredientListFragment_to_mainFrag"
+            app:destination="@id/mainFrag" />
     </fragment>
     <fragment
         android:id="@+id/totalNutrients"
